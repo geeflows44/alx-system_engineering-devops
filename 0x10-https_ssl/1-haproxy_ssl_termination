@@ -38,10 +38,10 @@ frontend myfrontend
         default_backend myservers
 
 frontend https_myfrontend
-        bind *:443 ssl crt /etc/haproxy/certs/www.nnamaka.tech.pem
+        bind *:443 ssl crt /etc/haproxy/certs/www.geeflows.tech.pem
         default_backend myservers
 
 backend myservers
         balance roundrobin
-        server 156921-web-01 54.173.9.45:80 check
-        server 156921-web-02 3.94.181.72:80 check
+        server 97839-web-01 100.25.200.1 check
+        server 97839-web-02 18.234.107.65 check
