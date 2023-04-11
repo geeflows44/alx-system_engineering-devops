@@ -1,17 +1,27 @@
- Bash script that will display information about the subdomains
+#!/usr/bin/env bash
+# A script to display information about my domain names
 
-dns_config () {
-    script=$(dig "$2"."$1" | grep -A1 'ANSWER SECTION:' | tr '\t' '\n' | tail -2 | tr '\n' ' ')
-    echo "$2 $script" | awk '{print "The subdomain " $1 " is a " $2 " record and points to " $3}'
+# define funtion to output subdomain, record type and destination IP
+# expects 2 arguments
+
+display_info () {
+	dig "$2.$1" | grep -A1 'ANSWER SECTION:' \
+	| tail -1 | sed -r "s/$2.$1./$2/g" | \
+	awk '{print "The subdomain " $1 " is a " $4 " record and points to " $5}'
+	 
 }
 
-if [ "$#" == 1 ]
+
+# control logic to make sure there is at least 1 argument before
+# displaying details
+
+if [ "$#" -eq 1 ]
 then
-  dns_config "$1" "www"
-  dns_config "$1" "lb-01"
-  dns_config "$1" "web-01"
-  dns_config "$1" "web-02"
-elif [ "$#" == 2 ]
+	display_info $1 "www"
+	display_info $1 "lb-01"
+	display_info $1 "web-01"
+	display_info $1 "web-02"
+elif [ "$#" -eq 2 ]
 then
-  dns_config "$1" "$2"
+	display_info $1 $2
 fi
