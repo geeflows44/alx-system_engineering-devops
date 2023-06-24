@@ -1,6 +1,8 @@
 # add stable version of nginx
-exec { 'add nginx stable repo':
-  command => 'sudo add-apt-repository ppa:nginx/stable',
+  exec { 'add_nginx_stable_repo':
+  command => 'sudo add-apt-repository -y ppa:nginx/stable',
+}
+
   path    => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
 }
 
